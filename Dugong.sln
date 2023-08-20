@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dugong.Cli", "Dugong.Cli\Dugong.Cli.csproj", "{C3F6E3B1-AA98-4FC6-84A8-A34C63410C04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dugong.Cli", "src\Dugong.Cli\Dugong.Cli.csproj", "{C3F6E3B1-AA98-4FC6-84A8-A34C63410C04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dugong.Core", "Dugong.Core\Dugong.Core.csproj", "{DE452977-FC48-49DC-9F13-F8CE2FB6AB59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dugong.Core", "src\Dugong.Core\Dugong.Core.csproj", "{DE452977-FC48-49DC-9F13-F8CE2FB6AB59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dugong.DocsSite", "Dugong.DocsSite\Dugong.DocsSite.csproj", "{4E194B83-35B8-44C7-8739-528245C9BB70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dugong.DocsSite", "src\Dugong.DocsSite\Dugong.DocsSite.csproj", "{4E194B83-35B8-44C7-8739-528245C9BB70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
