@@ -1,9 +1,0 @@
-@using StaticSiteGen
-@inherits StaticPage<StaticSiteGen.SiteModel>
-<head>
-    @{ await IncludeAsync("Components/Head.cshtml", Model); }
-</head>
-
-@{ await IncludeAsync("Components/Header.cshtml", Model); }
-
-@Raw(Model.Content?.Html)
