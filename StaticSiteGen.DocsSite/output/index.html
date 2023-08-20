@@ -1,0 +1,57 @@
+
+<head>
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary Meta Tags -->
+<title>StaticSiteGen</title>
+<meta name="title" content="StaticSiteGen" />
+<meta name="description" content="Test" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content="StaticSiteGen" />
+<meta property="og:description" content="Test" />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content="StaticSiteGen" />
+<meta property="twitter:description" content="Test" />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+<header class="text-gray-600 body-font">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+      <span class="ml-3 text-xl">StaticSiteGen</span>
+    </a>
+    <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+      <a class="mr-5 hover:text-gray-900">Showcase</a>
+      <a class="mr-5 hover:text-gray-900">Docs</a>
+    </nav>
+  </div>
+</header>
+<section class="text-gray-600 body-font">
+    <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+        <div class="text-center lg:w-2/3 w-full">
+            <h1 class="title-font sm:text-4xl text-4xl mb-4 font-medium text-gray-900">Build it the way you want</h1>
+            <p class="mb-8 text-2xl leading-relaxed">StaticSiteGen allows you to create websites fast using the templating engine and content sources you are used to.</p>
+            <div class="flex justify-center">
+                <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Get Started</button>
+            </div>
+        </div>
+    </div>
+</section>
