@@ -1,6 +1,11 @@
-<p align="center">
+<div align="center">
   <h1 align="center">Dugong</h1>
-</p>
+  <div>
+      <img alt="Nuget" src="https://img.shields.io/nuget/v/Dugong">
+  </div>
+</div>
+
+
 
 ## Getting Started
 
