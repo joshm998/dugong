@@ -1,0 +1,17 @@
+{
+  "name": "create-dugong-cms",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Scaffolding for Dugong CMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remix-run/express": "^2.2.0",
+    "dugong-cms": "^0.0.1",
+    "express": "^4.18.2"
+  }
+}
