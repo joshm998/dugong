@@ -1,0 +1,16 @@
+{
+    "$schema": "../template.schema.json",
+    "name": "Page",
+    "fields": [
+        {
+            "name": "title",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "content",
+            "type": "richtext",
+            "required": true
+        }
+    ]
+}

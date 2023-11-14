@@ -1,0 +1,42 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://dugong.dev/template.schema.json",
+    "title": "Template",
+    "description": "Template for content in dugong-cms",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The unique name for the template",
+            "type": "string"
+        },
+        "fields": {
+            "description": "Fields to be used in the template",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["string", "richtext", "number"]
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "defaultValue": {
+                        "type": "string"
+                    },
+                    "placeholder": {
+                        "type": "string"
+                    },
+                    "required": {
+                        "type": "boolean"
+                    }
+                },
+                "additionalProperties": false
+            },
+            
+            "minItems": 1
+        }
+    },
+    "required": ["name", "fields"]
+}

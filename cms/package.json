@@ -7,11 +7,14 @@
   "main": "dist/index.js",
   "license": "MIT",
   "repository": "https://github.com/joshm998/dugong",
-  "files": ["public"],
+  "files": [
+    "public"
+  ],
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual",
     "start": "remix-serve ./build/index.js",
+    "db:migrations": "drizzle-kit generate:sqlite --out ./app/db/migrations --schema ./app/db/schema.server.ts",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -19,6 +22,7 @@
     "@remix-run/node": "^2.2.0",
     "@remix-run/react": "^2.2.0",
     "@remix-run/serve": "^2.2.0",
+    "better-sqlite3": "^9.1.1",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -26,6 +30,7 @@
   "devDependencies": {
     "@remix-run/dev": "^2.2.0",
     "@remix-run/eslint-config": "^2.2.0",
+    "@types/better-sqlite3": "^7.6.7",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "eslint": "^8.38.0",

@@ -5,7 +5,8 @@
   "description": "Scaffolding for Dugong CMS",
   "main": "index.js",
   "scripts": {
-    "run": "node server.mjs",
+    "start": "node server.mjs",
+    "generate:db": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

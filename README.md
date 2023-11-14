@@ -1,7 +1,6 @@
 <div align="center">
   <h1 align="center">Dugong</h1>
   <div>
-      <img alt="Nuget" src="https://img.shields.io/nuget/v/Dugong">
   </div>
 </div>
 
