@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://dugong.dev/settings.schema.json",
+    "title": "Settings",
+    "description": "Available settings for Dugong CMS - check out https://dugong.dev/settings for more info",
+    "type": "object",
+    "properties": {
+        "siteName": {
+            "description": "The name of the website",
+            "type": "string"
+        },
+        "apiPlayground": {
+            "description": "Enable the API playground tab",
+            "type": "boolean",
+            "defaultValue": true
+        },
+        "commands": {
+            "description": "Enable the Commands tab",
+            "type": "boolean",
+            "defaultValue": false
+        },
+        "headerText": {
+            "description": "Text used in the header of the application",
+            "type": "string",
+            "defaultValue": "Dugong"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["siteName"]
+}

@@ -21,18 +21,6 @@ export default function Index() {
 
   return (
     <>
-      <div>
-        <h1>Fields</h1>
-      </div>
-      <ul>
-        {fields.map((field: any) => (
-          <li key={field.id}>
-            <p>
-              <b>{field.name} </b>
-               {field.value}</p>
-          </li>
-        ))}
-      </ul>
     </>
   )
 }

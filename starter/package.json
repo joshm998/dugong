@@ -1,11 +1,10 @@
 {
   "name": "create-dugong-cms",
   "version": "0.0.1",
-  "type": "module",
   "description": "Scaffolding for Dugong CMS",
   "main": "index.js",
   "scripts": {
-    "start": "node server.mjs",
+    "start": "node server.js",
     "generate:db": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

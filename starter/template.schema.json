@@ -9,6 +9,10 @@
             "description": "The unique name for the template",
             "type": "string"
         },
+        "displayName": {
+            "description": "The display name for the template",
+            "type": "string"
+        },
         "fields": {
             "description": "Fields to be used in the template",
             "type": "array",
@@ -38,5 +42,5 @@
             "minItems": 1
         }
     },
-    "required": ["name", "fields"]
+    "required": ["name", "fields", "displayName"]
 }

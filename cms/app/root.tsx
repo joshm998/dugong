@@ -1,13 +1,37 @@
+import { json } from "@remix-run/node";
+import CSS from "./css/app.css"
+import richtext from "./components/richtext/richtext.css"
+
 import {
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
+  useLoaderData
 } from "@remix-run/react";
 
-import type { MetaFunction } from "@remix-run/node";
+export const links: LinksFunction = () => {
+  return [
+    { rel: "stylesheet", href: CSS },
+    // { rel: "stylesheet", href: richtext },
+  ]
+};
+
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
+// import Sidebar from './components/sidebar';
+// import { Button, Tooltip } from "flowbite-react";
+// import Navbar from "./components/navbar";
+import { BaseLayout } from "./layouts/base-layout";
+import { templates } from "./utils/templates.server";
+import { settings } from "./utils/settings.server";
+
+export const loader = async () => {
+  const links = templates.map(e => ({link: e.name, name: e.displayName}))
+  console.log(settings);
+  return json({ links, settings });
+};
 
 export const meta: MetaFunction = () => {
   return [
@@ -17,6 +41,8 @@ export const meta: MetaFunction = () => {
 };
 
 export default function App() {
+  const { links, settings } = useLoaderData<any>();
+
   return (
     <html lang="en">
       <head>
@@ -25,8 +51,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <Outlet />
+      <body className="overscroll-none">
+        <BaseLayout items={links} siteName={settings.siteName}/>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
