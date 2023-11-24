@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "npx ts-node ./bin/index.ts"
   },
   "author": "",
   "license": "MIT",
@@ -12,6 +13,12 @@
     "dugong": "./bin/index.js"
   },
   "dependencies": {
-    "better-sqlite3": "^9.1.1"
+    "better-sqlite3": "^9.1.1",
+    "drizzle-orm": "^0.29.0"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.3",
+    "@types/better-sqlite3": "^7.6.8",
+    "drizzle-kit": "^0.20.4"
   }
 }

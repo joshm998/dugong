@@ -1,12 +1,17 @@
 import { json } from "@remix-run/node";
 import CSS from "./css/app.css"
-import richtext from "./components/richtext/richtext.css"
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
+// import Sidebar from './components/sidebar';
+// import { Button, Tooltip } from "flowbite-react";
+// import Navbar from "./components/navbar";
+import { BaseLayout } from "./layouts/base-layout";
+import { templates } from "./utils/templates.server";
+import { settings } from "./utils/settings.server";
 
 import {
   Links,
   LiveReload,
   Meta,
-  Outlet,
   Scripts,
   ScrollRestoration,
   useLoaderData
@@ -18,14 +23,6 @@ export const links: LinksFunction = () => {
     // { rel: "stylesheet", href: richtext },
   ]
 };
-
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-// import Sidebar from './components/sidebar';
-// import { Button, Tooltip } from "flowbite-react";
-// import Navbar from "./components/navbar";
-import { BaseLayout } from "./layouts/base-layout";
-import { templates } from "./utils/templates.server";
-import { settings } from "./utils/settings.server";
 
 export const loader = async () => {
   const links = templates.map(e => ({link: e.name, name: e.displayName}))

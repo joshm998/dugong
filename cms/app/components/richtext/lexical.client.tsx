@@ -1,4 +1,6 @@
 // components/lexical.client.tsx
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
+
 export * from 'lexical'
 export * from '@lexical/react/LexicalComposer'
 export * from '@lexical/react/LexicalRichTextPlugin'
@@ -14,7 +16,5 @@ export * from '@lexical/rich-text'
 export {$isParentElementRTL, $wrapNodes, $isAtNodeEnd} from '@lexical/selection';
 export { $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 export { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 
 export const ErrorBoundary = LexicalErrorBoundary;

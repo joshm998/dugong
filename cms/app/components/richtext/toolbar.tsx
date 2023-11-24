@@ -1,6 +1,4 @@
-import { useLexicalComposerContext } from "./lexical.client";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
+import { useLexicalComposerContext ,
     CAN_REDO_COMMAND,
     CAN_UNDO_COMMAND,
     REDO_COMMAND,
@@ -11,34 +9,29 @@ import {
     $getSelection,
     $isRangeSelection,
     $createParagraphNode,
-    $getNodeByKey
-} from "./lexical.client";
-import { $isLinkNode, TOGGLE_LINK_COMMAND } from "./lexical.client";
-import {
+    $getNodeByKey, 
+    $isLinkNode, 
+    TOGGLE_LINK_COMMAND,
     $isParentElementRTL,
     $wrapNodes,
-    $isAtNodeEnd
-} from "./lexical.client";
-import { $getNearestNodeOfType, mergeRegister } from "./lexical.client";
-import {
+    $isAtNodeEnd, 
+    $getNearestNodeOfType, 
+    mergeRegister,
     INSERT_ORDERED_LIST_COMMAND,
     INSERT_UNORDERED_LIST_COMMAND,
     REMOVE_LIST_COMMAND,
     $isListNode,
-    ListNode
-} from "./lexical.client";
-import { createPortal } from "react-dom";
-import {
+    ListNode,
     $createHeadingNode,
     $createQuoteNode,
-    $isHeadingNode
-} from "./lexical.client";
-import {
+    $isHeadingNode,
     $createCodeNode,
     $isCodeNode,
     getDefaultCodeLanguage,
     getCodeLanguages
 } from "./lexical.client";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { FaUndo, FaRedo, FaBold, FaItalic, FaUnderline, FaStrikethrough, FaLink, FaCode, FaAlignLeft, FaAlignCenter, FaAlignRight } from "react-icons/fa";
 
 const LowPriority = 1;
@@ -65,10 +58,6 @@ const blockTypeToBlockName = {
     quote: "Quote",
     ul: "Bulleted List"
 };
-
-function Divider() {
-    return <div className="divider" />;
-}
 
 function positionEditorElement(editor: any, rect: any) {
     if (rect === null) {
@@ -223,19 +212,6 @@ function FloatingLinkEditor({ editor }: any) {
     );
 }
 
-function Select({ onChange, className, options, value }: any) {
-    return (
-        <select className={className} onChange={onChange} value={value}>
-            <option hidden={true} value="" />
-            {options.map((option: any) => (
-                <option key={option} value={option}>
-                    {option}
-                </option>
-            ))}
-        </select>
-    );
-}
-
 function getSelectedNode(selection: any) {
     const anchor = selection.anchor;
     const focus = selection.focus;
@@ -255,32 +231,19 @@ function getSelectedNode(selection: any) {
 function BlockOptionsDropdownList({
     editor,
     blockType,
-    toolbarRef,
-    setShowBlockOptionsDropDown
+    toolbarRef
 }: any) {
     const dropDownRef = useRef(null);
 
     useEffect(() => {
-        const toolbar = toolbarRef.current;
-        const dropDown: any = dropDownRef.current;
-
-        if (toolbar !== null && dropDown !== null) {
-            const { top, left } = toolbar.getBoundingClientRect();
-            dropDown.style.top = `${top + 40}px`;
-            dropDown.style.left = `${left}px`;
-        }
-    }, [dropDownRef, toolbarRef]);
-
-    useEffect(() => {
         const dropDown: any = dropDownRef.current;
         const toolbar = toolbarRef.current;
-
         if (dropDown !== null && toolbar !== null) {
             const handle = (event: any) => {
                 const target = event.target;
 
                 if (!dropDown.contains(target) && !toolbar.contains(target)) {
-                    setShowBlockOptionsDropDown(false);
+                    closeDropdown();
                 }
             };
             document.addEventListener("click", handle);
@@ -289,7 +252,7 @@ function BlockOptionsDropdownList({
                 document.removeEventListener("click", handle);
             };
         }
-    }, [dropDownRef, setShowBlockOptionsDropDown, toolbarRef]);
+    }, [dropDownRef, toolbarRef]);
 
     const formatParagraph = () => {
         if (blockType !== "paragraph") {
@@ -301,7 +264,7 @@ function BlockOptionsDropdownList({
                 }
             });
         }
-        setShowBlockOptionsDropDown(false);
+        closeDropdown();
     };
 
     const formatLargeHeading = () => {
@@ -314,7 +277,7 @@ function BlockOptionsDropdownList({
                 }
             });
         }
-        setShowBlockOptionsDropDown(false);
+        closeDropdown();
     };
 
     const formatSmallHeading = () => {
@@ -327,7 +290,7 @@ function BlockOptionsDropdownList({
                 }
             });
         }
-        setShowBlockOptionsDropDown(false);
+        closeDropdown();
     };
 
     const formatBulletList = () => {
@@ -336,7 +299,7 @@ function BlockOptionsDropdownList({
         } else {
             editor.dispatchCommand(REMOVE_LIST_COMMAND);
         }
-        setShowBlockOptionsDropDown(false);
+        closeDropdown();
     };
 
     const formatNumberedList = () => {
@@ -345,7 +308,7 @@ function BlockOptionsDropdownList({
         } else {
             editor.dispatchCommand(REMOVE_LIST_COMMAND);
         }
-        setShowBlockOptionsDropDown(false);
+        closeDropdown();
     };
 
     const formatQuote = () => {
@@ -358,7 +321,7 @@ function BlockOptionsDropdownList({
                 }
             });
         }
-        setShowBlockOptionsDropDown(false);
+        closeDropdown();
     };
 
     const formatCode = () => {
@@ -371,48 +334,57 @@ function BlockOptionsDropdownList({
                 }
             });
         }
-        setShowBlockOptionsDropDown(false);
+        closeDropdown();
     };
 
+    const closeDropdown = () => {
+        // TODO: Use React State instead of this hack.
+        (dropDownRef.current as any).open = false;
+    }
+
     return (
-        <div className="dropdown" ref={dropDownRef}>
-            <button className="item" onClick={formatParagraph}>
-                <span className="icon paragraph" />
-                <span className="text">Normal</span>
-                {blockType === "paragraph" && <span className="active" />}
-            </button>
-            <button className="item" onClick={formatLargeHeading}>
-                <span className="icon large-heading" />
-                <span className="text">Large Heading</span>
-                {blockType === "h1" && <span className="active" />}
-            </button>
-            <button className="item" onClick={formatSmallHeading}>
-                <span className="icon small-heading" />
-                <span className="text">Small Heading</span>
-                {blockType === "h2" && <span className="active" />}
-            </button>
-            <button className="item" onClick={formatBulletList}>
-                <span className="icon bullet-list" />
-                <span className="text">Bullet List</span>
-                {blockType === "ul" && <span className="active" />}
-            </button>
-            <button className="item" onClick={formatNumberedList}>
-                <span className="icon numbered-list" />
-                <span className="text">Numbered List</span>
-                {blockType === "ol" && <span className="active" />}
-            </button>
-            <button className="item" onClick={formatQuote}>
-                <span className="icon quote" />
-                <span className="text">Quote</span>
-                {blockType === "quote" && <span className="active" />}
-            </button>
-            <button className="item" onClick={formatCode}>
-                <span className="icon code" />
-                <span className="text">Code Block</span>
-                {blockType === "code" && <span className="active" />}
-            </button>
-        </div>
-    );
+        <details ref={dropDownRef}>
+            <summary className="w-32 p-1.5">
+{(blockTypeToBlockName as any)[blockType]}</summary>
+            <ul className="z-10">
+                <li>
+                    <button className={blockType === "paragraph" ? "active" : ""} onClick={formatParagraph}>
+                        Normal
+                    </button>
+                </li>
+                <li>
+                    <button className={blockType === "h1" ? "active" : ""} onClick={formatLargeHeading}>
+                        Large Heading
+                    </button>
+                </li>
+                <li>
+                    <button className={blockType === "h2" ? "active" : ""} onClick={formatSmallHeading}>
+                        Small Heading
+                    </button>
+                </li>
+                <li>
+                    <button className={blockType === "ul" ? "active" : ""} onClick={formatBulletList}>
+                        Bullet List
+                    </button>
+                </li>
+                <li>
+                    <button className={blockType === "ol" ? "active" : ""} onClick={formatNumberedList}>
+                        Numbered List
+                    </button>
+                </li>
+                <li>
+                    <button className={blockType === "quote" ? "active" : ""} onClick={formatQuote}>
+                        Quote
+                    </button>
+                </li>
+                <li>
+                    <button className={blockType === "code" ? "active" : ""} onClick={formatCode}>
+                        Code
+                    </button>
+                </li>
+            </ul>
+        </details>)
+
 }
 
 export default function ToolbarPlugin() {
@@ -422,9 +394,6 @@ export default function ToolbarPlugin() {
     const [canRedo, setCanRedo] = useState(false);
     const [blockType, setBlockType] = useState("paragraph");
     const [selectedElementKey, setSelectedElementKey] = useState(null);
-    const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] = useState(
-        false
-    );
     const [codeLanguage, setCodeLanguage] = useState("");
     const [isRTL, setIsRTL] = useState(false);
     const [isLink, setIsLink] = useState(false);
@@ -745,6 +714,35 @@ export default function ToolbarPlugin() {
                     <span className="text-md p-1"><FaRedo /></span>
                 </button>
             </li>
+            {supportedBlockTypes.has(blockType) && (
+                <>
+                    {/* <li> */}
+                        {/* <button
+                            className="btn btn-sm"
+                            onClick={() =>
+                                setShowBlockOptionsDropDown(!showBlockOptionsDropDown)
+                            }
+                            aria-label="Formatting Options"
+                        >
+                            {(blockTypeToBlockName as any)[blockType]}
+                        </button> */}
+                        {/* <div className="dropdown">
+                            <label tabIndex={0} className="btn m-1">Click</label>
+                            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                <li><a>Item 1</a></li>
+                                <li><a>Item 2</a></li>
+                            </ul>
+                        </div>
+                    </li> */}
+                    <li>
+                        <BlockOptionsDropdownList
+                            editor={editor}
+                            blockType={blockType}
+                            toolbarRef={toolbarRef}
+                        />
+                    </li>
+            </>
+          )}
             <li>
                 <button
                     onClick={() => {
@@ -787,27 +785,50 @@ export default function ToolbarPlugin() {
                 </button>
             </li>
             <li>
-                <button>
+                <button
+                    onClick={() => {
+                        editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
+                    }}
+                    className={(isCode ? "active" : "")}
+                    aria-label="Insert Code">
                     <span className="text-md p-1"><FaCode /></span>
                 </button>
             </li>
             <li>
-                <button>
+                <button
+                    onClick={insertLink}
+                    className={(isLink ? "active" : "")}
+                    aria-label="Insert Link">
                     <span className="text-md p-1"><FaLink /></span>
                 </button>
+                {isLink &&
+                createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
             </li>
             <li>
-                <button>
+                <button
+                    onClick={() => {
+                        editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+                    }}
+                    aria-label="Center Align">
                     <span className="text-md p-1"><FaAlignLeft /></span>
                 </button>
             </li>
             <li>
-                <button>
+                <button
+                    onClick={() => {
+                        editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
+                    }}
+                    aria-label="Right Align">
                     <span className="text-md p-1"><FaAlignCenter /></span>
                 </button>
             </li>
             <li>
-                <button>
+                <button
+                    onClick={() => {
+                        editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
+                    }}
+                    className="toolbar-item"
+                    aria-label="Justify Align">
                     <span className="text-md p-1"><FaAlignRight /></span>
                 </button>
             </li>

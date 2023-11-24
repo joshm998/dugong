@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, isRouteErrorResponse, useLoaderData, useParams, useRouteError, useSearchParams } from "@remix-run/react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
+// import type { SubmitHandler} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import InputController from "~/components/input-controller";
 import Editor from "~/components/richtext/richtext";
 import { db } from "~/db/config.server";
@@ -14,7 +15,7 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const newItem = params.id == "new";
+  const newItem = params.documentId == "new";
   var filteredTemplates = templates.filter(e => e.name == params.contentName?.toLowerCase())
   if (filteredTemplates.length == 0)
   {
@@ -41,42 +42,51 @@ type Inputs = {
   description: string
 }
 
-export default function contentName() {
+export default function ContentName() {
   const { fields, template } = useLoaderData<any>()
-  const { handleSubmit, control, formState: { errors } } = useForm<Inputs>({
-    mode: 'onChange', values: {
-      name: "",
-      value: "",
-      key: "",
-      description: ""
-    }
-  })
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+  // const { handleSubmit, control, formState: { errors } } = useForm<Inputs>({
+  //   mode: 'onChange', values: {
+  //     name: "",
+  //     value: "",
+  //     key: "",
+  //     description: ""
+  //   }
+  // })
+  // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
 
   return (
     <>
       <div className="h-full w-full">
-        <form onSubmit={handleSubmit((data) => console.log(data))} className="flex gap-2 flex-col w-full h-full p-2 mb-16">
+        <form className="flex gap-2 flex-col w-full h-full p-2 mb-16">
           <div className="flex-1 overflow-scroll max-h-full">
 
-          <InputController
+          {/* <InputController
             label="Name"
             name="name"
-            control={control}
+            // control={control}
             defaultValue=""
-            rules={{}} />
+            rules={{}} /> */}
 
-            {template.fields.map((e: any) => (
-              <InputController
-                label={e.name}
-                name={e.name}
-                control={control}
-                defaultValue=""
-                rules={{}} />
-            ))}
-                  <Editor />
+            {/* {template.fields.map((e: any) => (
+              <>
+                {e.type == "string" ?
+                  <InputController
+                    label={e.name}
+                    name={e.name}
+                    // control={control}
+                    defaultValue=""
+                    rules={{}} /> : ""}
 
-
+                {e.type == "richtext" ?
+                  <div className="form-control w-full px-2">
+                    <label className="label">
+                      <span className="label-text">{e.name}</span>
+                    </label>
+                    <Editor />
+                  </div>
+                  : ""}
+              </>
+            ))} */}
           </div>
           <div className="flex w-full h-16 bg-white p-2 border-t-slate-200 border-t">
             <div className="flex flex-col">

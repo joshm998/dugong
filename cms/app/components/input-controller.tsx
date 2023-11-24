@@ -1,25 +1,17 @@
-import React from "react"
-import { Control, Controller, FieldValue } from "react-hook-form"
-import { Input, InputProps } from "./input"
+import type { InputProps } from "./input";
+import { Input } from "./input"
+import { useField } from "remix-validated-form";
 
-export interface InputControllerProps extends InputProps {
-    control: any
-    defaultValue: string
-    rules: any
-    name: string
+export interface InputFieldProps extends InputProps {
+    name: string,
+    label: string
 }
 
-const InputController = ({ control, type, rules, defaultValue, name, ...props }: InputControllerProps) => {
+const InputField = ({ name, label }: InputFieldProps) => {
+    const { error, getInputProps } = useField(name);
     return (
-        <Controller
-            control={control}
-            name={name}
-            rules={{ required: "Required" }}
-            render={({ field: { onChange, onBlur, value, ref }, fieldState: { error } }) => (
-                <Input onChange={onChange} onBlur={onBlur} value={value} ref={ref} error={error?.message} {...props} />
-            )}
-        />
-    )
-}
+      <Input {...getInputProps({ id: name })} error={error} label={label} />
+    );
+  };
 
-export default InputController
+export default InputField

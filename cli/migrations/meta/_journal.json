@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1700784821267,
+      "tag": "0000_rich_ser_duncan",
+      "breakpoints": true
+    }
+  ]
+}
