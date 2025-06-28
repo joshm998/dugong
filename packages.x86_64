@@ -1,8 +1,6 @@
 # Base packages
 base
 base-devel
-chaotic-keyring
-chaotic-mirrorlist
 btrfs-progs
 dmraid
 dosfstools
@@ -48,7 +46,7 @@ pv
 # Live System
 arch-install-scripts
 ckbcomp
-calamares
+calamares-dugong
 syslinux
 
 # Plasma
